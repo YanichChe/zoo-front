@@ -1,0 +1,15 @@
+export enum Color {
+    BACKGROUND= '#ffffff',
+
+    BUTTON_PRIMARY = '#EC695A',
+    BUTTON_ACCENT_PRIMARY = '#869292',
+    BUTTON_TEXT_PRIMARY = '#FFFFFF',
+
+    HEADER_TEXT_PRIMARY = '#0e0d0d',
+    HEADER_TEXT_SECONDARY = '#869292',
+
+    PLAIN_TEXT_PRIMARY = '#0e0d0d',
+    PLAIN_TEXT_SECONDARY = '#869292',
+
+    HOVER = '#e3e3e3',
+}

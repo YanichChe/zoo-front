@@ -1,19 +1,37 @@
-import React from 'react';
+import React, {StrictMode, Suspense} from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import './styles/css/index.css';
 import reportWebVitals from './reportWebVitals';
+import {Color} from "./styles/tc/colors";
+import {BrowserRouter} from "react-router-dom";
+import {Router} from "./AppRouter";
+import {PropagateLoader} from 'react-spinners'
+import {Menu} from "./modules/Menu/Menu";
 
 const root = ReactDOM.createRoot(
-  document.getElementById('root') as HTMLElement
+    document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <StrictMode>
+        <Suspense
+            fallback={
+                <div style={{
+                    alignItems: 'center',
+                    display: 'flex',
+                    height: '100vh',
+                    justifyContent: 'center',
+                    width: '100%'
+                }}>
+                    <PropagateLoader color={Color.BUTTON_PRIMARY}/>
+                </div>
+            }
+        >
+            <BrowserRouter>
+                <Menu />
+                <Router/>
+            </BrowserRouter>
+        </Suspense>
+    </StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
