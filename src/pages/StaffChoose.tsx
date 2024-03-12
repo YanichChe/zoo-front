@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import background from '../assets/back.png'
 import {Variant} from "../styles/tc/types";
 import {PlainText} from "../components/text/Text";
 import React from "react";

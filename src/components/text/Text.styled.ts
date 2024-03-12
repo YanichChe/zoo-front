@@ -48,9 +48,20 @@ export const StyledPlainText = styled(StyledText)`
     color: ${(props) => getPlainTextColorByVariant(props.config.variant)};
     text-decoration-color: ${(props) => getPlainTextColorByVariant(props.config.variant)};
     cursor: ${(props) => (props.config.isOnClick ? 'pointer' : 'auto')};
+    &:hover {
+        color: ${(props) =>
+                (props.config.hover ? `${Color.HOVER}`: getPlainTextColorByVariant(props.config.variant))}; ;
+    }
 `
 
 export const StyledHeaderText = styled(StyledText)`
+    text-align: ${(props) =>
+            (props.config.align === TextAlign.CENTER  ? TextAlign.LEFT  : TextAlign.CENTER)};
+    
     color: ${(props) => getHeaderTextColorByVariant(props.config.variant)};
     text-decoration-color: ${(props) => getHeaderTextColorByVariant(props.config.variant)};
+    &:hover {
+        color: ${(props) =>
+                (props.config.hover ? `${Color.HOVER}`: getHeaderTextColorByVariant(props.config.variant))}; ;
+    }
 `

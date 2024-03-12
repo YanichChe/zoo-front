@@ -12,4 +12,12 @@ export enum Color {
     PLAIN_TEXT_SECONDARY = '#869292',
 
     HOVER = '#e3e3e3',
+
+    INPUT_BACKGROUND_PRIMARY = '#ffffff',
+    INPUT_TEXT = '#869292',
+
+    SELECT = '#869292',
+
+    SHADOW = 'rgba(0,0,0,0.25)'
+
 }

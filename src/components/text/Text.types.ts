@@ -7,6 +7,7 @@ export enum TextAlign {
 
 export type TextUIConfig = {
     align?: TextAlign
+    hover?: boolean,
     bold?: boolean
     size: number
     underlined?: boolean
@@ -19,6 +20,7 @@ export type TextUIConfig = {
 export type TextConfig = {
     align?: TextAlign
     bold?: boolean
+    hover?: boolean,
     onClick?: any
     size: number
     text: string

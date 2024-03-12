@@ -1,46 +1,38 @@
-import {Variant} from "../../styles/tc/types";
-import {Button} from "../../components/button/Button";
+import { Variant } from "../../styles/tc/types";
+import { Button } from "../../components/button/Button";
 import React from "react";
-import {HeaderText, PlainText} from "../../components/text/Text";
-import styled from "styled-components";
-import {useNavigate} from "react-router-dom";
+import { HeaderText, PlainText } from "../../components/text/Text";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { TextAlign } from "../../components/text/Text.types";
+import { GridContainer, ItemsContainer } from "./Menu.styles";
 
 export function Menu() {
 
-    const GridContainer = styled.div`
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 7vh;
-        padding: 10px;
-        text-align: center;
-        box-sizing: border-box;
-        column-gap: 50px;
-        overflow: hidden;
-    `
+    type PathConfig = {
+        displayName: string
+        path: string
+    }
 
-    const ItemsContainer = styled.div`
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        width: 100%;
-        height: 95%;
-        min-height: fit-content;
-        padding: 10px;
-        text-align: center;
-        box-sizing: border-box;
-        column-gap: 120px;
-        overflow: auto;
-    `
+    const config: PathConfig[] = [
+        { displayName: 'главная', path: '/' },
+        { displayName: 'животные', path: '/animals' },
+        { displayName: 'сотрудники', path: '/staffs' },
+    ]
+
+    const location = useLocation()
     const navigate = useNavigate()
+    const currentPath = location.pathname
+
     const handleMain = async () => {
         navigate('/')
     }
 
     const handleLogin = async () => {
         navigate('/login')
+    }
+
+    function isBold(path: string, currentPath: string): boolean {
+        return path === currentPath
     }
 
     return (
@@ -52,38 +44,42 @@ export function Menu() {
                     bold: true,
                     variant: Variant.SECONDARY,
                     forcedSmallCase: true,
+                    align: TextAlign.LEFT,
                 }}
             />
             <ItemsContainer>
-                <PlainText
-                    config={{
-                        size: 16,
-                        text: 'главная',
-                        bold: false,
-                        variant: Variant.PRIMARY,
-                        forcedSmallCase: true,
-                        onClick: handleMain,
-                        isOnClick: true,
-                    }}
-                />
-                <PlainText
-                    config={{
-                        size: 16,
-                        text: 'животные',
-                        bold: false,
-                        variant: Variant.PRIMARY,
-                        forcedSmallCase: true,
-                    }}
-                />
-                <PlainText
-                    config={{
-                        size: 16,
-                        text: 'сотрудники',
-                        bold: false,
-                        variant: Variant.PRIMARY,
-                        forcedSmallCase: true,
-                    }}
-                />
+                {config.map((PathConfig) => (
+                    <Link style={{textDecoration: 'none'}} key={PathConfig.path} to={PathConfig.path}>
+                        {isBold(PathConfig.path, currentPath) ? (
+                                <PlainText
+                                    config={{
+                                        size: 16,
+                                        text: PathConfig.displayName,
+                                        bold: true,
+                                        variant: Variant.PRIMARY,
+                                        forcedSmallCase: true,
+                                        onClick: handleMain,
+                                        isOnClick: true,
+                                        hover: true,
+                                    }}
+                                />
+                        ) : (
+                            <PlainText
+                                config={{
+                                    size: 16,
+                                    text: PathConfig.displayName,
+                                    bold: false,
+                                    variant: Variant.PRIMARY,
+                                    forcedSmallCase: true,
+                                    onClick: handleMain,
+                                    isOnClick: true,
+                                    hover: true,
+                                }}
+                            />
+                        )}
+                    </Link>
+                ))}
+
             </ItemsContainer>
 
             <PlainText
@@ -93,6 +89,7 @@ export function Menu() {
                     bold: true,
                     variant: Variant.PRIMARY,
                     forcedSmallCase: true,
+                    hover: true,
                 }}
             />
             <Button
