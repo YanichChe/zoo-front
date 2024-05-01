@@ -3,7 +3,7 @@ import { Color } from "../../styles/tc/colors";
 import React from "react";
 import styled from "styled-components";
 
-export function Loading({ filter_ }: { filter_: JSX.Element }) {
+export function Loading() {
 
     const PageContainer = styled.div`
         height: 93vh;
@@ -13,7 +13,6 @@ export function Loading({ filter_ }: { filter_: JSX.Element }) {
 
     return (
         <PageContainer>
-            <>{filter_}</>
             <div
                 style={{
                     display: 'flex',

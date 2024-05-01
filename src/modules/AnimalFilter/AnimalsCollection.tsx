@@ -5,9 +5,19 @@ import { Container, Image, ImageContainer, PartContainer } from "../../pages/Ani
 import { HeaderText, PlainText } from "../../components/text/Text";
 import { Variant } from "../../styles/tc/types";
 import { buildImageUrl } from "../../common/buildImageUrl";
+import { Empty } from "../../components/empty/Empty";
+import { preloaderStore } from "../../store/PreloaderStore";
+import {Loading} from "../../components/loading/Loading";
 
 export const AnimalsCollection = observer(() => {
 
+    if (preloaderStore.isLoading) return (
+        <Loading />
+    );
+
+    if (animalStore.getAnimals().length === 0) return (
+        <Empty />
+    );
     return (
         <>
             {animalStore.getAnimals().map((animal, index) => (

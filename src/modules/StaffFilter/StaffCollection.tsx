@@ -5,8 +5,19 @@ import { HeaderText, PlainText } from "../../components/text/Text";
 import { Variant } from "../../styles/tc/types";
 import { buildImageUrl } from "../../common/buildImageUrl";
 import { staffStore } from "./StaffStore";
+import { preloaderStore } from "../../store/PreloaderStore";
+import { Loading} from "../../components/loading/Loading";
+import { Empty } from "../../components/empty/Empty";
 
 export const StaffCollection = observer(() => {
+
+    if (preloaderStore.isLoading) return (
+        <Loading />
+    );
+
+    if (staffStore.getStaffs().length === 0) return (
+        <Empty />
+    );
 
     return (
         <>

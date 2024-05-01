@@ -3,7 +3,7 @@ import { Variant } from "../../styles/tc/types";
 import React from "react";
 import styled from "styled-components";
 
-export function Empty ({ filter_ }: { filter_: JSX.Element }) {
+export function Empty () {
 const PageContainer = styled.div`
         height: 93vh;
         box-sizing: border-box;
@@ -12,7 +12,6 @@ const PageContainer = styled.div`
 
     return (
         <PageContainer>
-            <>{filter_}</>
             <PlainText
                 config={{
                     size: 16,

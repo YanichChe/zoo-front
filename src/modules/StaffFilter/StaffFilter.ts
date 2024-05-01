@@ -55,7 +55,6 @@ export class StaffFilter {
             filters.sorts = sorts;
         }
 
-
         if (this.gender !==  'пол') {
             filters.gender = this.gender === 'женский' ? 1 : 2
         }
