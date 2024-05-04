@@ -1,9 +1,9 @@
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { Observer } from 'mobx-react'
 import { Input } from '../../components/input/Input'
 import { InputType } from '../../components/input/Input.type'
 import { Variant } from '../../styles/tc/types'
-import { Icon, SearchContainer } from '../../pages/Animals.styles'
+import {BigIcon, Icon, SearchContainer} from '../../pages/Animals.styles'
 import lupa from '../../assets/Лупа.svg'
 import { Select } from '../../components/selector/Select'
 import { Agregator } from '../../components/agregator/Agregator'
@@ -17,7 +17,9 @@ import Pagination from "@mui/material/Pagination";
 import PaginationItem from "@mui/material/PaginationItem";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import {staffFilter} from "../StaffFilter/StaffFilter";
+import { staffFilter } from "../StaffFilter/StaffFilter";
+import plus from "../../assets/plus.svg"
+import { useNavigate } from "react-router-dom";
 
 export default function Filter() {
 
@@ -57,6 +59,11 @@ export default function Filter() {
     const genders = ['пол', 'мужской', 'женский']
     const statuses = ['статус', 'жив', 'не жив']
     const animalService = new AnimalService(HTTPClient.getInstance())
+    const navigate = useNavigate()
+
+    const handleClick = () => {
+        navigate('/animals/create')
+    }
 
     const handleStatus = (value: string) => {
         staffFilter.setPage(0)
@@ -108,6 +115,7 @@ export default function Filter() {
                     />
 
                     <Agregator name={'имя'} action={handleSort}/>
+                    <BigIcon src={plus} onClick={handleClick} />
                 </SearchContainer>
                     <Pagination
                         count={Math.ceil(animalStore.animalsCount / animalFilter.size)}

@@ -14,7 +14,7 @@ export class AnimalFilter {
 
     size: number = 5
 
-    gender: string | null = null
+    gender: string = 'пол'
 
     status: string = 'статус'
 

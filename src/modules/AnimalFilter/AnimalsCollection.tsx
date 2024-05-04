@@ -1,13 +1,14 @@
 import { observer } from "mobx-react";
 import { animalStore } from "./AnimalStore";
 import React from "react";
-import { Container, Image, ImageContainer, PartContainer } from "../../pages/Animals.styles";
+import {Container, DivLine, Icon, Image, ImageContainer, PartContainer} from "../../pages/Animals.styles";
 import { HeaderText, PlainText } from "../../components/text/Text";
 import { Variant } from "../../styles/tc/types";
 import { buildImageUrl } from "../../common/buildImageUrl";
 import { Empty } from "../../components/empty/Empty";
 import { preloaderStore } from "../../store/PreloaderStore";
-import {Loading} from "../../components/loading/Loading";
+import { Loading } from "../../components/loading/Loading";
+import pencil from "../../assets/pencil.svg"
 
 export const AnimalsCollection = observer(() => {
 
@@ -26,15 +27,19 @@ export const AnimalsCollection = observer(() => {
                         <Image src={buildImageUrl(animal.photoId)}/>
                     </ImageContainer>
                     <PartContainer>
-                        <HeaderText
-                            config={{
-                                size: 24,
-                                text: animal.name.toString(),
-                                bold: true,
-                                variant: Variant.PRIMARY,
-                                forcedSmallCase: true,
-                            }}
-                        />
+                        <DivLine>
+                            <HeaderText
+                                config={{
+                                    size: 24,
+                                    text: animal.name.toString(),
+                                    bold: true,
+                                    variant: Variant.PRIMARY,
+                                    forcedSmallCase: true,
+                                }}
+                            />
+
+                            <Icon src={pencil}/>
+                        </DivLine>
 
                         <PlainText
                             config={{

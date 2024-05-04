@@ -6,6 +6,7 @@ import Main from './pages/Main'
 import StaffChoose from "./pages/StaffChoose";
 import Animals from "./pages/Animals";
 import Staffs from "./pages/Staffs";
+import AnimalCreatePage from "./pages/AnimalCreatePage";
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -45,6 +46,13 @@ export function getRoutes(): RouteType[] {
             element: <Staffs />,
             isProtected: false,
             path: '/staffs',
+        },
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <AnimalCreatePage />,
+            isProtected: false,
+            path: '/animals/create',
         },
         {
             element: <Navigate to="/" />,
