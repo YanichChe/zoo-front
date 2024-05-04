@@ -30,6 +30,10 @@ export class AnimalService extends AbstractService {
         const result = await this.client.get(`${this.baseUrl}/animals/count`, options)
         return result.data
     }
+    public async delete(id: number | undefined) {
+        const result = await this.client.delete(`${this.baseUrl}/animals/${id}`)
+        return result.data
+    }
 
     public save = async (images: ImageType[], name:string, animalTitle: string, isAlive: boolean, date:string, gender: string, height:number, weight: number) => {
         try {
@@ -66,10 +70,12 @@ export class AnimalService extends AbstractService {
         }
     }
 
-    public update = async (id: number | undefined, images: ImageType[], name: string, animalTitle: string | undefined, isAlive: boolean | undefined, date: string | undefined, gender: Gender | undefined, height: number | undefined, weight: number | undefined) => {
+    public update = async (id: number | undefined, images: ImageType[], name: string, animalTitle: string | undefined,
+                           isAlive: boolean | undefined, date: string | undefined, gender: Gender | undefined, height: number | undefined, weight: number | undefined) => {
         console.log(id + ' ' + images  + ' ' + name + ' ' +
             animalTitle  + ' ' +  isAlive + ' ' +  date  + ' ' +  gender + ' ' +  height  + ' ' +  weight)
-       if (id === undefined || animalTitle === undefined || date === undefined || height === undefined || weight === undefined) return 'Не заполнены поля'
+       if (id === undefined || animalTitle === undefined || date === undefined || height === undefined || weight === undefined)
+           return 'Не заполнены поля'
         try {
             let response
             if (images[0] === undefined) {
