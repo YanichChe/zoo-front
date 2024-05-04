@@ -47,7 +47,9 @@ export default function Filter() {
 
         const animalDtos = await animalService.getListAnimals(options)
         const count = await animalService.getListAnimalsCount(options_)
+        const list = await animalService.getListAnimalsTitles()
         animalStore.setAnimalsDto(animalDtos)
+        animalStore.setAnimalsTitleList(list)
         animalStore.setAnimalsCount(count)
     }
 

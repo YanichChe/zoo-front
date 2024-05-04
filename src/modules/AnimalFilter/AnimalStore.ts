@@ -5,6 +5,7 @@ class AnimalStore {
 
     animalsDto: AnimalDto[] = []
     animalsCount: number = 0
+    animalsTitleList: string[] = []
 
     constructor() {
         makeAutoObservable(this)
@@ -24,6 +25,14 @@ class AnimalStore {
 
     getAnimals() {
         return this.animalsDto
+    }
+
+    setAnimalsTitleList(list: string[]) {
+        this.animalsTitleList = list
+    }
+
+    getAnimalsTitleList() {
+        return this.animalsTitleList
     }
 }
 

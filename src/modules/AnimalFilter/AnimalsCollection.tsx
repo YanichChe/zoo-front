@@ -9,8 +9,18 @@ import { Empty } from "../../components/empty/Empty";
 import { preloaderStore } from "../../store/PreloaderStore";
 import { Loading } from "../../components/loading/Loading";
 import pencil from "../../assets/pencil.svg"
+import { useNavigate } from "react-router-dom";
+import { animalUpdateStore } from "../AnimalUpdater/AnimalUpdateStore";
 
 export const AnimalsCollection = observer(() => {
+
+    const navigate = useNavigate()
+
+    const handleClick = (index: number) => {
+        // @ts-ignore
+        animalUpdateStore.setAnimalDto(animalStore.getAnimals().at(index))
+        navigate('/animals/update')
+    }
 
     if (preloaderStore.isLoading) return (
         <Loading />
@@ -38,7 +48,9 @@ export const AnimalsCollection = observer(() => {
                                 }}
                             />
 
-                            <Icon src={pencil}/>
+                            <Icon src={pencil} onClick={() => {
+                                handleClick(index)
+                            }}/>
                         </DivLine>
 
                         <PlainText

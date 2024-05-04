@@ -70,7 +70,7 @@ export const SizePartContainer = styled.div`
     align-content: center;
     width: 600px;
     gap: 10px;
-    height: 500px;
+    height: 600px;
     padding: 10px;
     text-align: center;
     box-sizing: border-box;
@@ -92,8 +92,8 @@ export const SizeImageContainer = styled(PartContainer)`
     box-sizing: border-box;
     padding: 10px;
     overflow: hidden;
-    height: 500px;
-    width: 500px;
+    height: 600px;
+    width: 600px;
     justify-content: center;
     align-content: center;
     align-items: center;

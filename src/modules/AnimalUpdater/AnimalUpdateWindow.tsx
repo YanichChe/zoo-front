@@ -1,27 +1,29 @@
 import {observer} from "mobx-react";
 import {
     CenterContainer,
-    DivLine,
+    DivLine, Image,
     MarginContainer,
     SizeImageContainer, SizePartContainer
 } from "../../pages/Animals.styles";
-import { HeaderText, PlainText } from "../../components/text/Text";
-import { Variant } from "../../styles/tc/types";
-import React, { useEffect, useState } from "react";
-import { Gender } from "../../services/staffService/Staff.types";
-import { Button } from "../../components/button/Button";
+import {HeaderText, PlainText} from "../../components/text/Text";
+import {Variant} from "../../styles/tc/types";
+import React, {useEffect, useState} from "react";
+import {Gender} from "../../services/staffService/Staff.types";
+import {Button} from "../../components/button/Button";
 import styled from "styled-components";
 import Select from 'react-select';
-import { AnimalService } from "../../services/animalService/AnimalService";
-import { HTTPClient } from "../../common/HTTPClient";
+import {AnimalService} from "../../services/animalService/AnimalService";
+import {HTTPClient} from "../../common/HTTPClient";
 import ImageUploading from 'react-images-uploading';
-import { useNavigate } from "react-router-dom";
-import { Alert } from "@mui/material";
+import {useNavigate} from "react-router-dom";
+import {Alert} from "@mui/material";
+import {animalUpdateStore} from "./AnimalUpdateStore";
+import {animalStore} from "../AnimalFilter/AnimalStore";
+import {buildImageUrl} from "../../common/buildImageUrl";
 
 const genders = [
     {value: Gender.MALE, label: 'Мужской'},
     {value: Gender.FEMALE, label: 'Женский'},
-    {value: null, label: 'Пол'},
 ];
 
 const statuses = [
@@ -29,24 +31,21 @@ const statuses = [
     {value: false, label: 'жив'},
 ];
 
-interface Option {
-    value: string;
-    label: string;
-}
+export const AnimalUpdateWindow = observer(() => {
 
-export const AnimalCreateWindow = observer(() => {
-    const [name, setName] = useState('')
-    const [isAlive, setIsAlive] = useState(statuses.at(1))
-    const [date, setDate] = useState('')
-    const [gender, setGender] = useState(genders.at(2))
-    const [height, setAnimalHeight] = useState(0)
-    const [weight, setAnimalWeight] = useState(0)
+    const [name, setName] = useState(animalUpdateStore.animalDto === null ? '' : animalUpdateStore.animalDto.name)
+    const [isAlive, setIsAlive] = useState(animalUpdateStore.animalDto?.isAlive === true ? statuses.at(1) : statuses.at(0))
+    const [date, setDate] = useState(animalUpdateStore.animalDto === null ? '' : animalUpdateStore.animalDto?.date)
+    const [gender, setGender] = useState(animalUpdateStore.animalDto?.gender === 'FEMALE' ? genders.at(1) : genders.at(0))
+    const [height, setAnimalHeight] = useState(animalUpdateStore.animalDto === null ? 0 : animalUpdateStore.animalDto?.height)
+    const [weight, setAnimalWeight] = useState(animalUpdateStore.animalDto === null ? 0 : animalUpdateStore.animalDto?.weight)
     const animalService = new AnimalService(HTTPClient.getInstance())
     const [responseStatus, setResponseStatus] = useState('ok')
 
     const [images, setImages] = React.useState([]);
 
     const navigate = useNavigate()
+    const formattedOptions = (animalStore.getAnimalsTitleList() || []).map(title => ({value: title, label: title}));
 
     // @ts-ignore
     const onChange = (imageList, addUpdateIndex) => {
@@ -55,17 +54,10 @@ export const AnimalCreateWindow = observer(() => {
         setImages(imageList);
     };
 
-
-    const [options, setOptions] = useState<Option[]>([]);
-
-    const handleFilterChange = async () => {
-        const list = await animalService.getListAnimalsTitles()
-        const formattedOptions = (list || []).map(title => ({value: title, label: title}));
-        setOptions(formattedOptions)
-    }
+    const [animalTitle, setAnimalTitle] = useState(formattedOptions.find(option => option.label === animalUpdateStore.animalDto?.animalAnimalTitle))
 
     useEffect(() => {
-        handleFilterChange()
+
     }, [responseStatus])
 
     // @ts-ignore
@@ -76,6 +68,11 @@ export const AnimalCreateWindow = observer(() => {
     // @ts-ignore
     const handleStatusChange = (selectedOption) => {
         setIsAlive(selectedOption)
+    };
+
+    // @ts-ignore
+    const handleAnimalTitleChange = (selectedOption) => {
+        setAnimalTitle(selectedOption)
     };
 
     // @ts-ignore
@@ -99,12 +96,17 @@ export const AnimalCreateWindow = observer(() => {
         setAnimalWeight(value)
     };
 
-    const save = async () => {
-        const code = await animalService.save(images, 'Yana', 'Гиена', true, date, 'MALE', height, weight)
+    const update = async () => {
+        console.log(animalUpdateStore.getAnimal()?.id + ' ' + images  + ' ' + name + ' ' +
+            animalTitle?.value  + ' ' +  isAlive?.value + ' ' +  date  + ' ' +  gender?.value  + ' ' +  height  + ' ' +  weight)
+        const code = await animalService.update(animalUpdateStore.getAnimal()?.id, images, name,
+            animalTitle?.value, isAlive?.value, date, gender?.value, height, weight)
+
         setResponseStatus(code)
-        if (code === 'ok' )navigate('/animals')
+        if (code === 'ok') navigate('/animals')
     }
 
+    // @ts-ignore
     return (
         <>
             <div style={{
@@ -124,6 +126,10 @@ export const AnimalCreateWindow = observer(() => {
             </div>
             <CenterContainer>
                 <SizeImageContainer>
+                    {animalUpdateStore.animalDto?.photoId && images.length===0
+                    && <Image src={buildImageUrl(animalUpdateStore.animalDto?.photoId)}/>
+                    }
+
                     <ImageUploading
                         value={images}
                         onChange={onChange}
@@ -182,7 +188,9 @@ export const AnimalCreateWindow = observer(() => {
                         }}
                     />
 
-                    <Select options={options} menuPortalTarget={document.body}
+                    <Select options={formattedOptions} menuPortalTarget={document.body}
+                            value={animalTitle}
+                            onChange={handleAnimalTitleChange}
                             styles={{
                                 menuPortal: base => ({...base, zIndex: 99,}),
                                 control: base => ({...base, width: '98%'})
@@ -289,9 +297,9 @@ export const AnimalCreateWindow = observer(() => {
                             config={{
                                 fullWidth: false,
                                 size: 12,
-                                text: 'Создать',
+                                text: 'Сохранить',
                                 variant: Variant.PRIMARY,
-                                onClick: save
+                                onClick: update
                             }}
                         />
                     </MarginContainer>
