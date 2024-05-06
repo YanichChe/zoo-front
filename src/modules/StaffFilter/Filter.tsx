@@ -3,7 +3,7 @@ import { Observer } from 'mobx-react'
 import { Input } from '../../components/input/Input'
 import { InputType } from '../../components/input/Input.type'
 import { Variant } from '../../styles/tc/types'
-import { Icon, SearchContainer } from '../../pages/Animals.styles'
+import { BigIcon, Icon, SearchContainer } from '../../pages/Animals.styles'
 import lupa from '../../assets/Лупа.svg'
 import { Select } from '../../components/selector/Select'
 import { Agregator } from '../../components/agregator/Agregator'
@@ -18,12 +18,16 @@ import { StaffService } from "../../services/staffService/StaffService";
 import { staffStore } from "./StaffStore";
 import { Gender, GetStaffListParameters, GetStaffListParametersCount } from "../../services/staffService/Staff.types";
 import { animalFilter } from "../AnimalFilter/AnimalFilter";
+import { useNavigate } from "react-router-dom";
+import plus from "../../assets/plus.svg";
 
 export default function Filter() {
     
     const [g, setG] = useState(staffFilter.gender)
     const [n, setN] = useState(staffFilter.nameOrder)
     const [p, setP] = useState(0)
+
+    const navigate = useNavigate()
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         staffFilter.setPage(value - 1)
@@ -71,6 +75,10 @@ export default function Filter() {
         setP(0)
     }
 
+    const handleClick = () => {
+        navigate('/staffs/create')
+    }
+
     return (
         <Observer>
             {() => (
@@ -94,6 +102,8 @@ export default function Filter() {
                         />
 
                         <Agregator name={'имя'} action={handleSort}/>
+                        <BigIcon src={plus} onClick={handleClick} />
+
                     </SearchContainer>
                     <Pagination
                         count={Math.ceil(staffStore.animalsCount / animalFilter.size)}

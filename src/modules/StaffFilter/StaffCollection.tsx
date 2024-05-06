@@ -59,7 +59,7 @@ export const StaffCollection = observer(() => {
                         <PlainText
                             config={{
                                 size: 16,
-                                text: 'Категория сотрудника: ' + staff.staffType,
+                                text: 'Категория сотрудника: ' + (staff.staffType === null? 'Неизвестно' : staff.staffType),
                                 bold: false,
                                 variant: Variant.PRIMARY,
                                 forcedSmallCase: true,

@@ -38,8 +38,11 @@ export class AnimalService extends AbstractService {
     public save = async (images: ImageType[], name:string, animalTitle: string, isAlive: boolean, date:string, gender: string, height:number, weight: number) => {
         try {
             const formData = new FormData()
-            // @ts-ignore
-            formData.append('image', images[0].file) // Первое изображение из списка
+
+            if (images[0] !== undefined) {
+                // @ts-ignore
+                formData.append('image', images[0].file) // Первое изображение из списка
+            }
             formData.append('name', 'А')
             formData.append('animalTitle', animalTitle)
             formData.append('isAlive', JSON.stringify(isAlive))
