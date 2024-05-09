@@ -119,3 +119,10 @@ export const DivLine = styled.div<{}>`
     gap: 10px;
     
 `
+export const MaxDivLine = styled.div<{}>`
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 10px;
+    
+`

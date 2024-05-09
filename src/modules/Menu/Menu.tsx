@@ -17,6 +17,7 @@ export function Menu() {
         { displayName: 'главная', path: '/' },
         { displayName: 'животные', path: '/animals' },
         { displayName: 'сотрудники', path: '/staffs' },
+        { displayName: 'все данные', path: '/tables' },
     ]
 
     const location = useLocation()
