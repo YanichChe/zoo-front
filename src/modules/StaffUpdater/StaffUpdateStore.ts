@@ -1,5 +1,5 @@
 import { makeAutoObservable } from "mobx";
-import { StaffDto } from "../../services/staffService/StaffService";
+import { StaffDto } from "../../services/staffServiceService/StaffService";
 
 class StaffUpdateStore {
 

@@ -8,7 +8,7 @@ import {
 import { HeaderText, PlainText } from "../../components/text/Text";
 import { Variant } from "../../styles/tc/types";
 import React, { useEffect, useState } from "react";
-import { Gender } from "../../services/staffService/Staff.types";
+import { Gender } from "../../services/staffServiceService/Staff.types";
 import { Button } from "../../components/button/Button";
 import styled from "styled-components";
 import Select from 'react-select';

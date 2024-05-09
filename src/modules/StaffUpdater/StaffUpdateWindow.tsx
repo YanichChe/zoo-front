@@ -9,7 +9,7 @@ import {
 import { PlainText } from "../../components/text/Text";
 import { Variant } from "../../styles/tc/types";
 import React, { useEffect, useState } from "react";
-import { Gender } from "../../services/staffService/Staff.types";
+import { Gender } from "../../services/staffServiceService/Staff.types";
 import { Button } from "../../components/button/Button";
 import styled from "styled-components";
 import Select from 'react-select';
@@ -17,7 +17,7 @@ import { HTTPClient } from "../../common/HTTPClient";
 import ImageUploading from 'react-images-uploading';
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
-import { StaffService } from "../../services/staffService/StaffService";
+import { StaffService } from "../../services/staffServiceService/StaffService";
 import { staffUpdateStore } from "./StaffUpdateStore";
 import { buildImageUrl } from "../../common/buildImageUrl";
 
