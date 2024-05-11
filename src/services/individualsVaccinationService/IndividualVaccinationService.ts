@@ -11,7 +11,7 @@ export class IndividualsVaccinationService extends AbstractService {
 
     private async getIndividual(url: string): Promise<string> {
         const result = await this.client.get(`${url}`);
-        return result.data.individualName as string;
+        return result.data.name as string;
     }
 
     private async getVaccination(url: string): Promise<string> {
@@ -26,11 +26,11 @@ export class IndividualsVaccinationService extends AbstractService {
 
     private async getIndividualsVaccinationArray(embeddedDto: EmbeddedDto): Promise<IndividualsVaccination[]> {
         const { _embedded } = embeddedDto;
-        if (!_embedded || !(_embedded['individuals-vaccination'] instanceof Array)) {
+        if (!_embedded || !(_embedded['individual-vaccination'] instanceof Array)) {
             return [];
         }
     
-        const individualsVaccinationDtos: IndividualsVaccinationDto[] = _embedded['individuals-vaccination'];
+        const individualsVaccinationDtos: IndividualsVaccinationDto[] = _embedded['individual-vaccination'];
     
         const individualsVaccinationArray: Promise<IndividualsVaccination>[] = individualsVaccinationDtos.map(async (individualsVaccinationDto: IndividualsVaccinationDto) => {
             const individual: string = await this.getIndividual(individualsVaccinationDto._links.individual.href);

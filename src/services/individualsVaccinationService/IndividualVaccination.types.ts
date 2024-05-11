@@ -7,7 +7,7 @@ export type IndividualsVaccinationDto = {
 
 export type EmbeddedDto = {
     _embedded: {
-        "individuals-vaccination": IndividualsVaccinationDto[];
+        "individual-vaccination": IndividualsVaccinationDto[];
     }
 }
 
