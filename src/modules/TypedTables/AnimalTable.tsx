@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react'
 
 import { HTTPClient } from '../../common/HTTPClient';
 import { Column, Table } from '../../components/table/Table';
-import { Animal } from '../../services/generalAnimalService/AnimalService.types';
 import { GeneralAnimalService } from '../../services/generalAnimalService/GeneralAnimalService';
+import { Animal } from '../../services/generalAnimalService/AnimalService.types';
 
 export default function AnimalTable() {
     const getService = new GeneralAnimalService (HTTPClient.getInstance())
