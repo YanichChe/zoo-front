@@ -6,6 +6,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+
+import Collapse from '@mui/material/Collapse';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+
 import CellHistoryTable from '../modules/TypedTables/CellHistoryTable';
 import AnimalTable from '../modules/TypedTables/AnimalTable';
 import DiseaseHistoryTable from '../modules/TypedTables/DiseaseHistoryTable';
@@ -24,53 +29,132 @@ import SeasonTable from '../modules/TypedTables/SeasonTable';
 import TypeRelationshipTable from '../modules/TypedTables/TypeRelationshipTable';
 import VaccinationTable from '../modules/TypedTables/VaccinationTable';
 import ZooTable from '../modules/TypedTables/ZooTable';
+import DietCharacteristicTable from '../modules/TypedTables/DietCharacteristicTable';
+import DietTable from '../modules/TypedTables/DietTable';
+import FoodProviderTable from '../modules/TypedTables/FoodProviderTable';
+import ProviderHistoryTable from '../modules/TypedTables/ProviderHistoryTable';
+import ProhibitedCombinationsSettlementTable from '../modules/TypedTables/ProhibitedCombinationsSettlementTable';
+
+interface TableComponents {
+  [key: string]: React.ComponentType<any>;
+}
+
+interface TableSection {
+  sectionName: string;
+  tables: { [key: string]: React.ComponentType<any> };
+}
+
+const tableSections: TableSection[] = [
+  {
+    sectionName: 'История',
+    tables: {
+      'История клеток': CellHistoryTable,
+      'История болезней': DiseaseHistoryTable,
+      'История особи': IndividualHistoryTable,
+      'Статус истории особи': IndividualReceiptStatusTable,
+      'История поставок': ProviderHistoryTable
+    }
+  },
+  {
+    sectionName: 'Животные',
+    tables: {
+      'Животные': AnimalTable,
+      'Фактор размножения': OffspringFactorTable
+    }
+  },
+  {
+    sectionName: 'Отношения',
+    tables: {
+      'Семейные отношения': FamilyRelationshipTable,
+      'Тип отношений': TypeRelationshipTable
+    }
+  },
+  {
+    sectionName: 'Разное',
+    tables: {
+      'Климатические зоны': ClimateZoneTable,
+      'Размерности еды': DimensionTable,
+      'Болезни': DiseaseTable,
+      'Тип еды': FeedTypeTable,
+      'Еда': FoodTable,
+      'Тип питания': NutritionTypeTable,
+      'Сезоны': SeasonTable,
+      'Вакцинации': VaccinationTable,
+      'Зоопарки': ZooTable,
+      'Характеристики диеты': DietCharacteristicTable,
+      'Диета':DietTable,
+      'Поставщики еды': FoodProviderTable,
+      'Запрещенные расселения': ProhibitedCombinationsSettlementTable
+    }
+  }
+];
 
 export default function Tables() {
-    const [selectedItem, setSelectedItem] = useState('история клеток');
+  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({});
 
-    const handleItemClick = (item: string) => {
-        setSelectedItem(item);
-    };
+  const [selectedItem, setSelectedItem] = useState('История клеток');
+  const [selectedSection, setSelectedSection] = useState(0);
 
-    return (
-        <PageContainer>
-            <MaxDivLine>
-                <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-                    <Divider />
-                    <nav aria-label="secondary mailbox folders">
-                        <List>
-                            {['история клеток', 'животные', 'история болезней', 'семейные отношения', 
-                            'история особи', 'статус истории особи', 'фактор размножения', 'вакцинации особей', 'климатические зоны', 
-                            'размерности еды', 'болезни', 'тип еды', 'еда', 'тип питания', 'сезоны', 
-                            'тип отношений', 'вакцинации', 'зоопарки'].map((item) => (
-                                <ListItem key={item} disablePadding selected={selectedItem === item}>
-                                    <ListItemButton onClick={() => handleItemClick(item)}>
-                                        <ListItemText primary={item} />
-                                    </ListItemButton>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </nav>
-                </Box>
-                {selectedItem === 'история клеток' && <CellHistoryTable />}
-                {selectedItem === 'животные' && <AnimalTable />}
-                {selectedItem === 'история болезней' && <DiseaseHistoryTable />}
-                {selectedItem === 'семейные отношения' && <FamilyRelationshipTable />}
-                {selectedItem === 'история особи' && <IndividualHistoryTable />}
-                {selectedItem === 'статус истории особи' && <IndividualReceiptStatusTable />}
-                {selectedItem === 'фактор размножения' && <OffspringFactorTable />}
-                {selectedItem === 'вакцинации особей' && <IndividualsVaccinationTable />}
-                {selectedItem === 'климатические зоны' && <ClimateZoneTable />}
-                {selectedItem === 'размерности еды' && <DimensionTable />}       
-                {selectedItem === 'болезни' && <DiseaseTable />}       
-                {selectedItem === 'тип еды' && <FeedTypeTable />}       
-                {selectedItem === 'еда' && <FoodTable />}       
-                {selectedItem === 'тип питания' && <NutritionTypeTable />}       
-                {selectedItem === 'сезоны' && <SeasonTable />}       
-                {selectedItem === 'тип отношений' && <TypeRelationshipTable />}       
-                {selectedItem === 'вакцинации' && <VaccinationTable />}       
-                {selectedItem === 'зоопарки' && <ZooTable />}                          
-            </MaxDivLine>
-        </PageContainer>
-    );
+  const getSectionIndexByName = (sectionName: string): number => {
+    const index = tableSections.findIndex(section => section.sectionName === sectionName);
+    return index !== -1 ? index : 0;
+  };
+
+  const handleSectionClick = (sectionName: string) => {
+    const index = getSectionIndexByName(sectionName);
+    console.log(index ? index : 0);
+    setSelectedSection(index);
+    setSelectedItem('');
+  };
+
+  const handleItemClick = (item: string) => {
+      console.log(item);
+      setSelectedItem(item);
+  };
+
+  const toggleSection = (sectionName: string) => {
+    handleSectionClick(sectionName);
+    setOpenSections((prevState) => ({
+      ...prevState,
+      [sectionName]: !prevState[sectionName]
+    }));
+  };
+
+
+
+  return (
+    <PageContainer>
+      <MaxDivLine>
+        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+          <Divider />
+          <nav aria-label="secondary mailbox folders">
+            <List>
+              {tableSections.map((section) => (
+                <div key={section.sectionName}>
+                  <ListItem button onClick={() => toggleSection(section.sectionName) }>
+                    <ListItemText primary={section.sectionName} />
+                    {openSections[section.sectionName] ? <ExpandLess /> : <ExpandMore />}
+                  </ListItem>
+                  <Collapse in={openSections[section.sectionName]} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                      {Object.entries(section.tables).map(([tableName, TableComponent]) => (
+                        <ListItem key={tableName} disablePadding selected={selectedItem === tableName}>
+                        <ListItemButton onClick={() => handleItemClick(tableName)}>
+                            <ListItemText primary={tableName} />
+                        </ListItemButton>
+                    </ListItem>
+                      ))}
+                    </List>
+                  </Collapse>
+                </div>
+              ))}
+            </List>
+          </nav>
+        </Box>
+    
+        {selectedItem && React.createElement(tableSections[selectedSection].tables[selectedItem])}
+  
+      </MaxDivLine>
+    </PageContainer>
+  );
 }
