@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { AccessAnimal } from '../../services/accessAnimalService/AccessAnimal.types';
+import { ResponseAnimal } from '../../services/responsibleAnimalService/ResponsibleAnimal.types';
 import { IndividualService } from '../../services/individualService/IndividualService';
 import { HTTPClient } from '../../common/HTTPClient';
 import Select from 'react-select';
 import { StaffService } from '../../services/staffService/StaffService';
-import { AccessAnimalService } from '../../services/accessAnimalService/AccessAnimalService';
+import { ResponseAnimalService } from '../../services/responsibleAnimalService/ResponsibleAnimalService';
 import { Alert } from '@mui/material';
 
 const Form = styled.form`
@@ -56,8 +56,8 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
 `
-const AccessAnimalCreatePage: React.FC = () => {
-  const [formData, setFormData] = useState<AccessAnimal>({
+const ResponseAnimalCreatePage: React.FC = () => {
+  const [formData, setFormData] = useState<ResponseAnimal>({
     dateStart: '',
     dateEnd: null,
     individual: '',
@@ -82,7 +82,7 @@ const AccessAnimalCreatePage: React.FC = () => {
 
   const individualService = new IndividualService(HTTPClient.getInstance())
   const staffService = new StaffService(HTTPClient.getInstance())
-  const accessAnimalService = new AccessAnimalService(HTTPClient.getInstance())
+  const responseAnimalService = new ResponseAnimalService(HTTPClient.getInstance())
 
   const [options, setOptions] = useState<Option[]>([]);
   const [staffOptions, setStaffOptions] = useState<Option[]>([]);
@@ -120,7 +120,7 @@ const AccessAnimalCreatePage: React.FC = () => {
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
-    const code = await accessAnimalService.createAccessAnimal(formData)
+    const code = await responseAnimalService.createResponseAnimal(formData)
     setResponseStatus(code)
     console.log(code)
   };
@@ -138,7 +138,7 @@ const AccessAnimalCreatePage: React.FC = () => {
                 transform: 'translateX(-50%)', /* смещение влево на половину ширины */
                 bottom: '30px',
             }}>
-                {responseStatus !== '' && responseStatus !== 'ok'  && (
+                {responseStatus !== 'ok' && responseStatus !== '' &&(
                     <Alert severity="warning" onClose={() => {
                         setResponseStatus('')
                     }}>
@@ -201,11 +201,11 @@ const AccessAnimalCreatePage: React.FC = () => {
                                   control: base => ({...base, width: '98%'})
                               }}/>
         </FormGroup>
-        <Button type="submit">Добавить доступ к животному</Button>
+        <Button type="submit">Добавить ответственного за животного</Button>
       </Form>
       </Container>
     </>
   );
 };
 
-export default AccessAnimalCreatePage;
+export default ResponseAnimalCreatePage;
