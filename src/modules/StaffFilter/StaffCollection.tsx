@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import pencil from "../../assets/pencil.svg";
 import bin from "../../assets/bin.svg";
 import { Alert, Button } from "@mui/material";
-import { StaffService } from "../../services/staffServiceService/StaffService";
+import { StaffService } from "../../services/staffService/StaffService";
 import { HTTPClient } from "../../common/HTTPClient";
 
 export const StaffCollection = observer(() => {

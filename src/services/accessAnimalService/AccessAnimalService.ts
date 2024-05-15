@@ -1,5 +1,5 @@
 import { AbstractService } from "../AbstractService";
-import { AccessAnimalDto, AccessAnimal, EmbeddedDto } from "./AccessAnimal.types";
+import { AccessAnimalDto, AccessAnimal, EmbeddedDto, AccessAnimalId, AccessAnimalRequest } from "./AccessAnimal.types";
 
 export class AccessAnimalService extends AbstractService {
     public async getList(): Promise<AccessAnimal[]> {
@@ -41,5 +41,41 @@ export class AccessAnimalService extends AbstractService {
     private async getStaff(url: string): Promise<string> {
         const result = await this.client.get(`${url}`);
         return result.data.middleName + ' ' + result.data.name + ' ' + result.data.surname as string;
+    }
+
+    public createAccessAnimal = async(accessAnimal: AccessAnimal) => {
+        try {
+        const id: AccessAnimalId = new AccessAnimalId(
+            accessAnimal.dateStart,
+            accessAnimal.individual,
+            accessAnimal.staff
+        );
+
+        const request: AccessAnimalRequest = new AccessAnimalRequest(
+            accessAnimal.dateStart,
+            accessAnimal.individual,
+            accessAnimal.staff,
+            id
+        );
+
+
+        let response = await this.client.post(`${this.baseUrl}/access-animals`, request);
+        if (response.data.dateEnd !== undefined) {
+            return  'ok'
+        } else {
+            // @ts-ignore
+            const responseBody = await response.text
+            // @ts-ignore
+            console.log('RESPONSE ' + response.text)
+            const jsonResponse = JSON.parse(responseBody)
+            return jsonResponse.message
+
+        }
+        } catch (error) {
+            console.error('Произошла ошибка:', error)
+
+            // @ts-ignore
+            return error.response.data.message
+        }
     }
 }

@@ -1,5 +1,5 @@
 import { AbstractService } from "../AbstractService";
-import { GetStaffListParameters } from "./Staff.types";
+import { EmbeddedDto, GetStaffListParameters, staffShort, staffShortDto } from "./Staff.types";
 import { GetAnimalListParameters } from "../animalService/Animal.types";
 import { ImageType } from "react-images-uploading/dist/typings";
 
@@ -111,5 +111,34 @@ export class StaffService extends AbstractService {
             console.error('Произошла ошибка:', error)
             return 'Неожиданная ошибка'
         }
+    }
+
+    public async getList(): Promise<staffShort[]> {
+        const result = await this.client.get(`${this.baseUrl}/staff-list`);
+        const staffShortArray: staffShort[] = await this.getstaffShortArray(result.data);
+        console.log(staffShortArray)
+        return staffShortArray;
+    }
+
+    private async getstaffShortArray(embeddedDto: EmbeddedDto): Promise<staffShort[]> {
+        const { _embedded } = embeddedDto;
+        if (!_embedded || !(_embedded['staff-list'] instanceof Array)) {
+            return [];
+        }
+    
+        const staffShortDtos: staffShortDto[] = _embedded['staff-list'];
+    
+        const staffShortArray: Promise<staffShort>[] = staffShortDtos.map(async (staffShortDto: staffShortDto) => {
+            const { name, middleName, surname } = staffShortDto;
+            const self: string = staffShortDto._links.self.href;
+            return { 
+                name,
+                surname,
+                middleName, 
+                self,
+            };
+        });
+    
+        return Promise.all(staffShortArray);
     }
 }

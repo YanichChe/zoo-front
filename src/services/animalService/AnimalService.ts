@@ -43,7 +43,7 @@ export class AnimalService extends AbstractService {
                 // @ts-ignore
                 formData.append('image', images[0].file) // Первое изображение из списка
             }
-            formData.append('name', 'А')
+            formData.append('name', name)
             formData.append('animalTitle', animalTitle)
             formData.append('isAlive', JSON.stringify(isAlive))
             formData.append('date', date)
