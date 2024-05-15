@@ -34,6 +34,8 @@ import DietTable from '../modules/TypedTables/DietTable';
 import FoodProviderTable from '../modules/TypedTables/FoodProviderTable';
 import ProviderHistoryTable from '../modules/TypedTables/ProviderHistoryTable';
 import ProhibitedCombinationsSettlementTable from '../modules/TypedTables/ProhibitedCombinationsSettlementTable';
+import ResponseAnimalTable from '../modules/TypedTables/ResponsibleAnimalTable';
+import AccessAnimalTable from '../modules/TypedTables/AccessAnimalTable';
 
 interface TableComponents {
   [key: string]: React.ComponentType<any>;
@@ -70,27 +72,47 @@ const tableSections: TableSection[] = [
     }
   },
   {
-    sectionName: 'Разное',
+    sectionName: 'Кормление',
     tables: {
-      'Климатические зоны': ClimateZoneTable,
       'Размерности еды': DimensionTable,
-      'Болезни': DiseaseTable,
       'Тип еды': FeedTypeTable,
       'Еда': FoodTable,
       'Тип питания': NutritionTypeTable,
+      'Характеристики питания': DietCharacteristicTable,
+      'Диета':DietTable,
+      'Поставщики еды': FoodProviderTable,
+    }
+  },
+  {
+    sectionName: 'Медицина',
+    tables: {
+      'Болезни': DiseaseTable,
+      'Вакцины': VaccinationTable,
+      'Вакцинация особей': IndividualsVaccinationTable,
+    }
+  },
+  {
+    sectionName: 'Разное',
+    tables: {
+      'Климатические зоны': ClimateZoneTable,
+      'Болезни': DiseaseTable,
       'Сезоны': SeasonTable,
       'Вакцинации': VaccinationTable,
       'Зоопарки': ZooTable,
-      'Характеристики диеты': DietCharacteristicTable,
-      'Диета':DietTable,
-      'Поставщики еды': FoodProviderTable,
       'Запрещенные расселения': ProhibitedCombinationsSettlementTable
+    }
+  },
+  {
+    sectionName: 'Животные-Сотрудники',
+    tables: {
+      'Доступ к животным': AccessAnimalTable,
+      'Ответственные за животных': ResponseAnimalTable,
     }
   }
 ];
 
 export default function Tables() {
-  const [openSections, setOpenSections] = useState<{ [key: string]: boolean }>({});
+  const [openSections, setOpenSections] = useState('');
 
   const [selectedItem, setSelectedItem] = useState('История клеток');
   const [selectedSection, setSelectedSection] = useState(0);
@@ -114,13 +136,9 @@ export default function Tables() {
 
   const toggleSection = (sectionName: string) => {
     handleSectionClick(sectionName);
-    setOpenSections((prevState) => ({
-      ...prevState,
-      [sectionName]: !prevState[sectionName]
-    }));
+    if (openSections === sectionName) setOpenSections('');
+    else setOpenSections(sectionName)
   };
-
-
 
   return (
     <PageContainer>
@@ -133,9 +151,9 @@ export default function Tables() {
                 <div key={section.sectionName}>
                   <ListItem button onClick={() => toggleSection(section.sectionName) }>
                     <ListItemText primary={section.sectionName} />
-                    {openSections[section.sectionName] ? <ExpandLess /> : <ExpandMore />}
+                    {section.sectionName===openSections ? <ExpandLess /> : <ExpandMore />}
                   </ListItem>
-                  <Collapse in={openSections[section.sectionName]} timeout="auto" unmountOnExit>
+                  <Collapse in={section.sectionName===openSections } timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                       {Object.entries(section.tables).map(([tableName, TableComponent]) => (
                         <ListItem key={tableName} disablePadding selected={selectedItem === tableName}>
