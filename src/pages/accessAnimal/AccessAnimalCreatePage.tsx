@@ -187,7 +187,8 @@ const AccessAnimalCreatePage: React.FC = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="individual">Особь</Label>
-          <Select onChange={(option) => handleSelectChange(option, { name: 'individual' })} name="individual" options={options} menuPortalTarget={document.body}
+          <Select onChange={(option) => 
+          handleSelectChange(option, { name: 'individual' })} name="individual" options={options} menuPortalTarget={document.body}
                               styles={{
                                   menuPortal: base => ({...base, zIndex: 99,}),
                                   control: base => ({...base, width: '98%'})
@@ -195,7 +196,8 @@ const AccessAnimalCreatePage: React.FC = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="staff">Сотрудник</Label>
-          <Select   onChange={(option) => handleSelectChange(option, { name: 'staff' })} options={staffOptions} menuPortalTarget={document.body}
+          <Select   onChange={(option) => 
+          handleSelectChange(option, { name: 'staff' })} options={staffOptions} menuPortalTarget={document.body}
                               styles={{
                                   menuPortal: base => ({...base, zIndex: 99,}),
                                   control: base => ({...base, width: '98%'})

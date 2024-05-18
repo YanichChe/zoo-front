@@ -201,7 +201,8 @@ const AccessAnimalUpdatePage: React.FC = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="individual">Особь</Label>
-          <Select value={individualOption} onChange={(option) => handleSelectChange(option, { name: 'individual' })} name="individual" options={options} menuPortalTarget={document.body}
+          <Select value={individualOption} onChange={(option) => 
+          handleSelectChange(option, { name: 'individual' })} name="individual" options={options} menuPortalTarget={document.body}
                               styles={{
                                   menuPortal: base => ({...base, zIndex: 99,}),
                                   control: base => ({...base, width: '98%'})
@@ -209,7 +210,8 @@ const AccessAnimalUpdatePage: React.FC = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="staff">Сотрудник</Label>
-          <Select value={staffOption} onChange={(option) => handleSelectChange(option, { name: 'staff' })} options={staffOptions} menuPortalTarget={document.body}
+          <Select value={staffOption} onChange={(option) => 
+          handleSelectChange(option, { name: 'staff' })} options={staffOptions} menuPortalTarget={document.body}
                               styles={{
                                   menuPortal: base => ({...base, zIndex: 99,}),
                                   control: base => ({...base, width: '98%'})
