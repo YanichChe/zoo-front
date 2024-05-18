@@ -1,25 +1,25 @@
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 import {
     CenterContainer,
     DivLine, Image,
     MarginContainer,
     SizeImageContainer, SizePartContainer
 } from "../../pages/Animals.styles";
-import {HeaderText, PlainText} from "../../components/text/Text";
-import {Variant} from "../../styles/tc/types";
-import React, {useEffect, useState} from "react";
-import {Gender} from "../../services/staffService/Staff.types";
-import {Button} from "../../components/button/Button";
+import { HeaderText, PlainText } from "../../components/text/Text";
+import { Variant } from "../../styles/tc/types";
+import React, { useEffect, useState } from "react";
+import { Gender } from "../../services/staffService/Staff.types";
+import { Button } from "../../components/button/Button";
 import styled from "styled-components";
 import Select from 'react-select';
-import {AnimalService} from "../../services/animalService/AnimalService";
-import {HTTPClient} from "../../common/HTTPClient";
+import { AnimalService } from "../../services/animalService/AnimalService";
+import { HTTPClient } from "../../common/HTTPClient";
 import ImageUploading from 'react-images-uploading';
-import {useNavigate} from "react-router-dom";
-import {Alert} from "@mui/material";
-import {animalUpdateStore} from "./AnimalUpdateStore";
-import {animalStore} from "../AnimalFilter/AnimalStore";
-import {buildImageUrl} from "../../common/buildImageUrl";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
+import { animalUpdateStore } from "./AnimalUpdateStore";
+import { animalStore } from "../AnimalFilter/AnimalStore";
+import { buildImageUrl } from "../../common/buildImageUrl";
 
 const genders = [
     {value: Gender.MALE, label: 'Мужской'},
@@ -27,8 +27,8 @@ const genders = [
 ];
 
 const statuses = [
-    {value: true, label: 'не жив'},
-    {value: false, label: 'жив'},
+    {value: false, label: 'не жив'},
+    {value: true, label: 'жив'},
 ];
 
 export const AnimalUpdateWindow = observer(() => {
@@ -97,6 +97,7 @@ export const AnimalUpdateWindow = observer(() => {
     };
 
     const update = async () => {
+        console.log(isAlive?.label)
         console.log(animalUpdateStore.getAnimal()?.id + ' ' + images  + ' ' + name + ' ' +
             animalTitle?.value  + ' ' +  isAlive?.value + ' ' +  date  + ' ' +  gender?.value  + ' ' +  height  + ' ' +  weight)
         const code = await animalService.update(animalUpdateStore.getAnimal()?.id, images, name,
