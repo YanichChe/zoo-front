@@ -30,6 +30,14 @@ export type ResponseAnimal = {
     dateEnd: string | null;
     individual: string;
     staff: string;
+    self: string;
+}
+
+export type ResponseAnimalInput = {
+    dateStart: string;
+    dateEnd: string | null;
+    individual: string;
+    staff: string;
 }
 
 export class ResponseAnimalId {

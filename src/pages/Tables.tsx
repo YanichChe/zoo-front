@@ -124,13 +124,11 @@ export default function Tables() {
 
   const handleSectionClick = (sectionName: string) => {
     const index = getSectionIndexByName(sectionName);
-    console.log(index ? index : 0);
     setSelectedSection(index);
     setSelectedItem('');
   };
 
   const handleItemClick = (item: string) => {
-      console.log(item);
       setSelectedItem(item);
   };
 

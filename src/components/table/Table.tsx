@@ -2,6 +2,9 @@ import { Table as MuiTable, TableBody, TableCell, TableContainer, TableHead, Tab
 import Box from '@mui/material/Box'
 import { ChangeEvent, ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import edit from "../../assets/pencil.svg"
+import bin from "../../assets/bin.svg"
+import styled from "styled-components";
 
 export type Column = {
   label: ReactNode
@@ -16,7 +19,14 @@ export type TableProps = {
   page?: number
   pageSize?: number
   pageable?: boolean
+  onEdit?: any
+  onDelete?: any
+  id?: string[]
 }
+
+export const  Icon = styled.img`;
+    height: 35px;
+`
 
 export function Table(props: TableProps) {
   const { t } = useTranslation()
@@ -33,6 +43,16 @@ export function Table(props: TableProps) {
     handleChangePage(0)
     if (props.onPageSize) props.onPageSize(pageSize1)
   }
+
+  const handleClick = (index: number) => {
+    props.onEdit !== null && props.id!== undefined && props.onEdit(props.id[index])
+  }
+  
+  const handleDeleteClick = (index: number) => {
+    // @ts-ignore
+    props.onDelete !== null && props.id!== undefined && props.onDelete(props.id[index])
+  }
+
   return (
     <Box style={{ width: '100%' }}>
       <TableContainer style={{ width: '100%' }}>
@@ -45,7 +65,7 @@ export function Table(props: TableProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.data.map((row) => (
+            {props.data.map((row, rowIndex) => (
               <TableRow>
                 {row.map((cell) => (
                   <TableCell>
@@ -59,8 +79,15 @@ export function Table(props: TableProps) {
                     >
                       {cell}
                     </Box>
+                    
                   </TableCell>
                 ))}
+                <Icon src={edit} onClick={() => {
+                                handleClick(rowIndex)
+                            }}/>
+                <Icon src={bin} onClick={() => {
+                                handleDeleteClick(rowIndex)
+                            }}/>
               </TableRow>
             ))}
           </TableBody>

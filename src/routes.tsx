@@ -13,6 +13,7 @@ import StaffUpdatePage from "./pages/StaffUpdatePage";
 import Tables from './pages/Tables';
 import AccessAnimalCreatePage from './pages/accessAnimal/AccessAnimalCreatePage';
 import ResponseAnimalCreatePage from './pages/responseAnimal/ResponseAnimalCreatePage';
+import AccessAnimalUpdatePage from './pages/accessAnimal/AccessAnimalUpdatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -97,6 +98,14 @@ export function getRoutes(): RouteType[] {
             element: <AccessAnimalCreatePage />,
             isProtected: false,
             path: '/access-animal/create',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <AccessAnimalUpdatePage />,
+            isProtected: false,
+            path: '/access-animal/update',
         },
 
         {

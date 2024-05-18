@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ResponseAnimal } from '../../services/responsibleAnimalService/ResponsibleAnimal.types';
+import { ResponseAnimal, ResponseAnimalInput } from '../../services/responsibleAnimalService/ResponsibleAnimal.types';
 import { IndividualService } from '../../services/individualService/IndividualService';
 import { HTTPClient } from '../../common/HTTPClient';
 import Select from 'react-select';
@@ -57,7 +57,7 @@ const Container = styled.div`
   width: 100%;
 `
 const ResponseAnimalCreatePage: React.FC = () => {
-  const [formData, setFormData] = useState<ResponseAnimal>({
+  const [formData, setFormData] = useState<ResponseAnimalInput>({
     dateStart: '',
     dateEnd: null,
     individual: '',
