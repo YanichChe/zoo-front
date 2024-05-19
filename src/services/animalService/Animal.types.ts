@@ -16,3 +16,25 @@ export enum Gender {
     FEMALE = 'FEMALE',
     MALE = 'MALE',
 }
+
+export type AnimalSimpeDto= {
+    animalTitle: string
+    _links: AnimalLinksDto;
+}
+
+export type EmbeddedDto = {
+    _embedded: {
+        "general-animal": AnimalSimpeDto[];
+    }
+}
+
+export type AnimalLinksDto = {
+    self: {
+        href: string;
+    }
+}
+
+export type Animal = {
+    animalTitle: string;
+    self: string;
+}

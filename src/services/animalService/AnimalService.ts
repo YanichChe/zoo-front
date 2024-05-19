@@ -1,5 +1,5 @@
 import { AbstractService } from "../AbstractService"
-import { Gender, GetAnimalListParameters } from "./Animal.types"
+import { Animal, AnimalSimpeDto, EmbeddedDto, Gender, GetAnimalListParameters } from "./Animal.types"
 import { ImageType } from "react-images-uploading/dist/typings"
 
 export type AnimalDto = {
@@ -15,6 +15,30 @@ export type AnimalDto = {
 }
 
 export class AnimalService extends AbstractService {
+
+    public async getList(): Promise<Animal[]> {
+        const result = await this.client.get(`${this.baseUrl}/general-animal`);
+        return this.mapAnimalArray(result.data);
+    }
+
+    private async mapAnimalArray(embeddedDto: EmbeddedDto): Promise<Animal[]> {
+        const { _embedded } = embeddedDto;
+        if (!_embedded || !Array.isArray(_embedded['general-animal'])) {
+            return [];
+        }
+
+        const animalsDtos: AnimalSimpeDto[] = _embedded['general-animal'];
+
+        const animals: Promise<Animal>[] = animalsDtos.map(async (dto) => this.mapAnimalDto(dto));
+        return Promise.all(animals);
+    }
+
+    private async mapAnimalDto(dto: AnimalSimpeDto): Promise<Animal> {
+        const { animalTitle } = dto;
+        const self = dto._links.self.href;
+        return { animalTitle, self };
+    }
+
 
     public async getListAnimals(options: GetAnimalListParameters): Promise<AnimalDto[]> {
         const result = await this.client.get(`${this.baseUrl}/animals`, options)
