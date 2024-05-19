@@ -26,24 +26,9 @@ export class CellHistoryService extends AbstractService {
     }
 
     public update = async (cellHistory: CellHistoryInput, url: string): Promise<string> => {
-        if (cellHistory.dateEnd !== null) {
-            const dateValidationMessage = this.validateDates(cellHistory.dateStart, cellHistory.dateEnd);
-            if (dateValidationMessage) return dateValidationMessage;
-        }
-        
-        const cellNumberValidationMessage = this.validateCellNumber(cellHistory.cellNumber);
-        if (cellNumberValidationMessage) return cellNumberValidationMessage;
-
-        try {
-            const request = this.createCellHistoryRequest(cellHistory);
-            const response = await this.client.put(url, request);
-
-            const validationMessage = await this.validateResponseData(response.data, cellHistory);
-            return validationMessage || (response.data.dateEnd ? 'ok' : this.extractErrorMessage(response));
-        } catch (error) {
-            console.error('Произошла ошибка:', error);
-            return this.extractErrorMessage(error);
-        }
+        this.deleteCellHistory(url);
+        const code = await this.create(cellHistory);
+        return code;
     }
 
     public create = async (cellHistory: CellHistoryInput): Promise<string> => {
@@ -56,7 +41,7 @@ export class CellHistoryService extends AbstractService {
             const request = this.createCellHistoryRequest(cellHistory);
             const response = await this.client.post(`${this.baseUrl}/cell-history`, request);
 
-            return response.data.dateEnd ? 'ok' : this.extractErrorMessage(response);
+            return response.data.dateEnd!== undefined ? 'ok' : this.extractErrorMessage(response);
         } catch (error) {
             console.error('Произошла ошибка:', error);
             return this.extractErrorMessage(error);
