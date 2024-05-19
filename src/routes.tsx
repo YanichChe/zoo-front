@@ -15,6 +15,8 @@ import AccessAnimalCreatePage from './pages/accessAnimal/AccessAnimalCreatePage'
 import ResponseAnimalCreatePage from './pages/responseAnimal/ResponseAnimalCreatePage';
 import AccessAnimalUpdatePage from './pages/accessAnimal/AccessAnimalUpdatePage';
 import ResponsibleAnimalUpdatePage from './pages/responseAnimal/ResponseAnimalUpdatePage';
+import CellHistoryUpdatePage from './pages/cellHistory/CellHistoryUpdatePage';
+import CellHistoryCreatePage from './pages/cellHistory/CellHistoryCreatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -123,6 +125,22 @@ export function getRoutes(): RouteType[] {
             element: <ResponsibleAnimalUpdatePage />,
             isProtected: false,
             path: '/response-animal/update',
+        },
+        
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <CellHistoryCreatePage />,
+            isProtected: false,
+            path: '/cell-history/create',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <CellHistoryUpdatePage />,
+            isProtected: false,
+            path: '/cell-history/update',
         },
 
         {
