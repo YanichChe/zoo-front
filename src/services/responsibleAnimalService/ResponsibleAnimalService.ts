@@ -67,8 +67,8 @@ export class ResponsibleAnimalService extends AbstractService {
         try {
             const request = this.createResponsibleAnimalRequest(ResponsibleAnimal);
             const response = await this.client.post(`${this.baseUrl}/response-animal`, request);
-
-            return response.data.dateEnd ? 'ok' : this.extractErrorMessage(response);
+            console.log(response.data);
+            return response.data.dateEnd!==undefined ? 'ok' : this.extractErrorMessage(response);
         } catch (error) {
             console.error('Произошла ошибка:', error);
             return this.extractErrorMessage(error);
@@ -76,22 +76,9 @@ export class ResponsibleAnimalService extends AbstractService {
     }
 
     public update = async (responsibleAnimal: ResponsibleAnimalInput, url: string): Promise<string> => {
-        console.log('!!!' + url);
-        if (responsibleAnimal.dateEnd !== null) {
-            const dateValidationMessage = this.validateDates(responsibleAnimal.dateStart, responsibleAnimal.dateEnd);
-            if (dateValidationMessage) return dateValidationMessage;
-        }
-
-        try {
-            const request = this.createResponsibleAnimalRequest(responsibleAnimal);
-            const response = await this.client.put(url, request);
-
-            const validationMessage = await this.validateResponseData(response.data, responsibleAnimal);
-            return validationMessage || (response.data.dateEnd ? 'ok' : this.extractErrorMessage(response));
-        } catch (error) {
-            console.error('Произошла ошибка:', error);
-            return this.extractErrorMessage(error);
-        }
+        this.deleteResponsibleAnimal(url)
+        const code = await this.createResponsibleAnimal(responsibleAnimal);
+        return code;
     }
 
     private validateDates(dateStart: string, dateEnd: string): string | null {

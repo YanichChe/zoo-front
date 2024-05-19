@@ -68,7 +68,7 @@ export class AccessAnimalService extends AbstractService {
             const request = this.createAccessAnimalRequest(accessAnimal);
             const response = await this.client.post(`${this.baseUrl}/access-animals`, request);
 
-            return response.data.dateEnd ? 'ok' : this.extractErrorMessage(response);
+            return response.data.dateEnd!== undefined ? 'ok' : this.extractErrorMessage(response);
         } catch (error) {
             console.error('Произошла ошибка:', error);
             return this.extractErrorMessage(error);
@@ -76,21 +76,9 @@ export class AccessAnimalService extends AbstractService {
     }
 
     public update = async (accessAnimal: AccessAnimalInput, url: string): Promise<string> => {
-        if (accessAnimal.dateEnd !== null) {
-            const dateValidationMessage = this.validateDates(accessAnimal.dateStart, accessAnimal.dateEnd);
-            if (dateValidationMessage) return dateValidationMessage;
-        }
-
-        try {
-            const request = this.createAccessAnimalRequest(accessAnimal);
-            const response = await this.client.put(url, request);
-
-            const validationMessage = await this.validateResponseData(response.data, accessAnimal);
-            return validationMessage || (response.data.dateEnd ? 'ok' : this.extractErrorMessage(response));
-        } catch (error) {
-            console.error('Произошла ошибка:', error);
-            return this.extractErrorMessage(error);
-        }
+        this.deleteAccessAnimal(url)
+        const code = await this.createAccessAnimal(accessAnimal);
+        return code
     }
 
     private validateDates(dateStart: string, dateEnd: string): string | null {

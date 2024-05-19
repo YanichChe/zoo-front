@@ -49,6 +49,7 @@ export default function AccessAnimalTable() {
         accessAnimalStore.setIndividual(accessAnimal.individual)
         accessAnimalStore.setStaff(accessAnimal.staff)
         accessAnimalStore.setSelf(id)
+        console.log('!!!! ' + accessAnimal.individual)
         navigate('/access-animal/update')
     }
 
