@@ -7,7 +7,6 @@ import { Observer } from 'mobx-react';
 import { ProhibitedInput } from '../../services/prohibitedCombinationsSettlement/Prohibited.types';
 import { AnimalService } from '../../services/animalService/AnimalService';
 import { ProhibitedCombinationsSettlementService } from '../../services/prohibitedCombinationsSettlement/ProhibitedService';
-import { prohibitedStore } from './prohibitedStore';
 
 const Form = styled.form`
   margin: auto auto;
@@ -98,19 +97,6 @@ const ProhibitedCreatePage: React.FC = () => {
       const list = await animalService.getList()
       console.log(list)
       const formattedOptions = (list || []).map(individual => ({value: individual.self, label: individual.animalTitle}));
-     
-      if (formattedOptions.length !== 0) {
-        const a = formattedOptions.find(option => option.label === prohibitedStore.getAnimal1())
-        const b = formattedOptions.find(option => option.label === prohibitedStore.getAnimal2())
-        setAnimalId1Option(a)
-        setAnimalId1Option(b)
-        // @ts-ignore
-        if (a !== undefined) handleSelectChange(a, { name: 'animalId1' })
-        
-        // @ts-ignore
-        if (b !== undefined) handleSelectChange(b, { name: 'animalId2' })
-      }
-
       setOptions(formattedOptions)
   }
 

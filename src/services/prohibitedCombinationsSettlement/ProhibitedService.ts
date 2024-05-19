@@ -41,8 +41,8 @@ export class ProhibitedCombinationsSettlementService extends AbstractService {
             const request = this.createProhibitedRequest(prohibited);
             console.log(request.animalId1, request.animalId2, request.id)
             const response = await this.client.post(`${this.baseUrl}/prohibited-combination`, request);
-
-            return response.data.dateEnd ? 'ok' : this.extractErrorMessage(response);
+            console.log(response.data);
+            return response.data._links.animalId1 ? 'ok' : this.extractErrorMessage(response);
         } catch (error) {
             console.error('Произошла ошибка:', error);
             return this.extractErrorMessage(error);
@@ -51,16 +51,9 @@ export class ProhibitedCombinationsSettlementService extends AbstractService {
 
     
     public update = async (prohibited: ProhibitedInput, url: string): Promise<string> => {
-        try {
-            const request = this.createProhibitedRequest(prohibited);
-            const response = await this.client.put(url, request);
-
-            const validationMessage = await this.validateResponseData(response.data, prohibited);
-            return validationMessage || (response.data.dateEnd ? 'ok' : this.extractErrorMessage(response));
-        } catch (error) {
-            console.error('Произошла ошибка:', error);
-            return this.extractErrorMessage(error);
-        }
+        this.deleteProhibited(url);
+        const code = await this.createProhibited(prohibited);
+        return code
     }
 
     public async deleteProhibited(url: string): Promise<string> {
@@ -82,7 +75,14 @@ export class ProhibitedCombinationsSettlementService extends AbstractService {
     }
 
     private createProhibitedRequest(prohibited: ProhibitedInput): ProhibitedRequest {
-        const id = new ProhibitedId(prohibited.animalId1, prohibited.animalId2);
+
+        const parts1: string[] = prohibited.animalId1.split("/");
+        const number1: string = parts1[parts1.length - 1];
+
+        const parts2: string[] = prohibited.animalId1.split("/");
+        const number2: string = parts2[parts2.length - 1];
+
+        const id = new ProhibitedId(number1, number2);
         return new ProhibitedRequest(prohibited.animalId1, prohibited.animalId2, id);
     }
 
