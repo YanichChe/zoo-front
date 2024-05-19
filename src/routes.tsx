@@ -14,6 +14,7 @@ import Tables from './pages/Tables';
 import AccessAnimalCreatePage from './pages/accessAnimal/AccessAnimalCreatePage';
 import ResponseAnimalCreatePage from './pages/responseAnimal/ResponseAnimalCreatePage';
 import AccessAnimalUpdatePage from './pages/accessAnimal/AccessAnimalUpdatePage';
+import ResponsibleAnimalUpdatePage from './pages/responseAnimal/ResponseAnimalUpdatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -114,6 +115,14 @@ export function getRoutes(): RouteType[] {
             element: <ResponseAnimalCreatePage />,
             isProtected: false,
             path: '/response-animal/create',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <ResponsibleAnimalUpdatePage />,
+            isProtected: false,
+            path: '/response-animal/update',
         },
 
         {

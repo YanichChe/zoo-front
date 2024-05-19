@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { ResponsibleAnimalInput } from '../../services/responsibleAnimalService/ResponsibleAnimal.types';
+import { ResponsibleAnimalInput } from '../../services/responsibleAnimalService/ResponsibleAnimal.types'; 
 import { IndividualService } from '../../services/individualService/IndividualService';
 import { HTTPClient } from '../../common/HTTPClient';
 import Select from 'react-select';
 import { StaffService } from '../../services/staffService/StaffService';
-import { ResponsibleAnimalService } from '../../services/responsibleAnimalService/ResponsibleAnimalService';
+import { ResponsibleAnimalService } from '../../services/responsibleAnimalService/ResponsibleAnimalService'
 import { Alert } from '@mui/material';
+import { responsibleAnimalStore } from './responseAnimalStore';
+import { Observer } from 'mobx-react';
 
 const Form = styled.form`
   margin: auto auto;
@@ -56,10 +58,10 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
 `
-const ResponsibleAnimalCreatePage: React.FC = () => {
+const ResponsibleAnimalUpdatePage: React.FC = () => {
   const [formData, setFormData] = useState<ResponsibleAnimalInput>({
-    dateStart: '',
-    dateEnd: null,
+    dateStart: responsibleAnimalStore.getDateStart(),
+    dateEnd: responsibleAnimalStore.getDateEnd(),
     individual: '',
     staff: '',
   });
@@ -70,8 +72,6 @@ const ResponsibleAnimalCreatePage: React.FC = () => {
       ...prev,
       [name]: value,
     }));
-
-    console.log(formData);
   };
 
   interface Option {
@@ -79,29 +79,21 @@ const ResponsibleAnimalCreatePage: React.FC = () => {
     label: string;
   }
 
-
   const individualService = new IndividualService(HTTPClient.getInstance())
   const staffService = new StaffService(HTTPClient.getInstance())
   const responsibleAnimalService = new ResponsibleAnimalService(HTTPClient.getInstance())
 
   const [options, setOptions] = useState<Option[]>([]);
   const [staffOptions, setStaffOptions] = useState<Option[]>([]);
-
   const [responseStatus, setResponseStatus] = useState('')
 
-  const handleFilterChange = async () => {
-      const list = await individualService.getList()
-      const formattedOptions = (list || []).map(individual => ({value: individual.self, label: individual.name}));
-      
-      const staffList = await staffService.getList()
-      const staffFormattedOptions = (staffList || []).map(staff => 
-        ({value: staff.self, label: staff.surname + ' ' + staff.name + ' ' + staff.middleName}));
-      setOptions(formattedOptions)
-      setStaffOptions(staffFormattedOptions)
-    
-  }
+  const[staffOption, setStaffOption] = useState<Option>();
+  const[individualOption, setIndividualOption] = useState<Option>();
 
   const handleSelectChange = (selectedOption: Option | null, actionMeta: { name: string }) => {
+    if (actionMeta.name === 'individual' && selectedOption !== null) setIndividualOption(selectedOption)
+    if (actionMeta.name === 'staff' && selectedOption !== null) setStaffOption(selectedOption)
+    console.log(actionMeta.name)
     if (selectedOption) {
       setFormData((prev) => ({
         ...prev,
@@ -113,23 +105,45 @@ const ResponsibleAnimalCreatePage: React.FC = () => {
         [actionMeta.name]: '',
       }));
     }
-
-    console.log(formData);
   };
+
+  const handleFilterChange = async () => {
+      const list = await individualService.getList()
+      const formattedOptions = (list || []).map(individual => ({value: individual.self, label: individual.name}));
+      const staffList = await staffService.getList()
+      const staffFormattedOptions = (staffList || []).map(staff => 
+        ({value: staff.self, label: staff.surname + ' ' + staff.name + ' ' + staff.middleName}));
+
+      if (formattedOptions.length !== 0) {
+        const a = staffFormattedOptions.find(option => option.label === responsibleAnimalStore.getStaff())
+        const b = formattedOptions.find(option => option.label === responsibleAnimalStore.getIndividual())
+        setStaffOption(a)
+        setIndividualOption(b)
+        // @ts-ignore
+        if (a !== undefined) handleSelectChange(a, { name: 'staff' })
+        
+        // @ts-ignore
+        if (b !== undefined) handleSelectChange(b, { name: 'individual' })
+      }
+
+      setOptions(formattedOptions)
+      setStaffOptions(staffFormattedOptions)
+  }
 
   const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    const code = await responsibleAnimalService.createResponsibleAnimal(formData)
+    console.log('!!!!' + formData.dateStart, formData.dateEnd, formData.individual, formData.staff)
+    const code = await responsibleAnimalService.update(formData, responsibleAnimalStore.getSelf())
     setResponseStatus(code)
-    console.log(code)
   };
 
-  useEffect(() => {
-    handleFilterChange()
-}, [])
+  useEffect(() => { 
+    handleFilterChange();
+  }, []);
 
   return (
+    <Observer>
+    {() => (
     <>
      <div style={{
                 position: 'absolute',
@@ -187,7 +201,7 @@ const ResponsibleAnimalCreatePage: React.FC = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="individual">Особь</Label>
-          <Select onChange={(option) => 
+          <Select value={individualOption} onChange={(option) => 
           handleSelectChange(option, { name: 'individual' })} name="individual" options={options} menuPortalTarget={document.body}
                               styles={{
                                   menuPortal: base => ({...base, zIndex: 99,}),
@@ -196,18 +210,20 @@ const ResponsibleAnimalCreatePage: React.FC = () => {
         </FormGroup>
         <FormGroup>
           <Label htmlFor="staff">Сотрудник</Label>
-          <Select   onChange={(option) => 
+          <Select value={staffOption} onChange={(option) => 
           handleSelectChange(option, { name: 'staff' })} options={staffOptions} menuPortalTarget={document.body}
                               styles={{
                                   menuPortal: base => ({...base, zIndex: 99,}),
                                   control: base => ({...base, width: '98%'})
                               }}/>
         </FormGroup>
-        <Button type="submit">Добавить отвественного за животного</Button>
+        <Button type="submit">Обновить отвественного за животного</Button>
       </Form>
       </Container>
     </>
+    )}
+    </Observer>
   );
 };
 
-export default ResponsibleAnimalCreatePage;
+export default ResponsibleAnimalUpdatePage;

@@ -25,7 +25,7 @@ export type ResponsibleAnimalLinksDto = {
     }
 }
 
-export type ResponseAnimal = {
+export type ResponsibleAnimal = {
     dateStart: string;
     dateEnd: string | null;
     individual: string;
@@ -33,14 +33,14 @@ export type ResponseAnimal = {
     self: string;
 }
 
-export type ResponseAnimalInput = {
+export type ResponsibleAnimalInput = {
     dateStart: string;
     dateEnd: string | null;
     individual: string;
     staff: string;
 }
 
-export class ResponseAnimalId {
+export class ResponsibleAnimalId {
     dateStart: string;
     individual: string;
     staff: string;
@@ -51,16 +51,18 @@ export class ResponseAnimalId {
         this.staff = staff;
     }
 }
-export class ResponseAnimalRequest {
+export class ResponsibleAnimalRequest {
     dateStart: string;
+    dateEnd: string | null;
     individual: string;
     staff: string;
-    id: ResponseAnimalId;
+    id: ResponsibleAnimalId;
 
-    constructor(dateStart: string, individual: string, staff: string, id: ResponseAnimalId) {
+    constructor(dateStart: string, individual: string, staff: string, id: ResponsibleAnimalId, dateEnd: string | null = null ) {
         this.dateStart = dateStart;
         this.individual = individual;
         this.staff = staff;
         this.id = id;
+        this.dateEnd = dateEnd;
     }
 }
