@@ -17,4 +17,5 @@ export type DiseaseLinksDto = {
 
 export type Disease = {
     diseaseName: string;
+    self: string;
 }

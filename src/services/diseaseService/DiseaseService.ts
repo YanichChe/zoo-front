@@ -17,8 +17,10 @@ export class DiseaseService extends AbstractService {
         const diseaseDtos: DiseaseDto[] = _embedded['diseases'];
     
         const diseaseArray: Disease[] = diseaseDtos.map((diseaseDto: DiseaseDto) => {
+            const self = diseaseDto._links.self.href;
             return {
-                diseaseName: diseaseDto.diseaseName
+                diseaseName: diseaseDto.diseaseName,
+                self
             };
         });
     

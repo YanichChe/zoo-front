@@ -96,21 +96,6 @@ export class AccessAnimalService extends AbstractService {
         return new AccessAnimalRequest(accessAnimal.dateStart, accessAnimal.individual, accessAnimal.staff, id, accessAnimal.dateEnd);
     }
 
-    private async validateResponseData(responseData: AccessAnimalDto, accessAnimal: AccessAnimalInput): Promise<string | null> {
-        const { dateEnd, _links } = responseData;
-        const dateStart = this.extractDateFromUrl(_links.self.href);
-        const individual = await this.getIndividual(_links.individual.href);
-        const staff = await this.getStaff(_links.staff.href);
-
-        if (dateEnd !== accessAnimal.dateEnd ||
-            individual !== await this.getIndividual(accessAnimal.individual) ||
-            staff !== await this.getStaff(accessAnimal.staff) ||
-            dateStart !== accessAnimal.dateStart) {
-            return 'Ошибка: данные не обновились';
-        }
-        return null;
-    }
-
     private extractErrorMessage(response: any): string {
         // @ts-ignore
         const responseBody = response?.text ? response.text() : JSON.stringify(response);
