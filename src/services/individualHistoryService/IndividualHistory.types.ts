@@ -35,4 +35,26 @@ export type IndividualHistory = {
     individual: string;
     individualStatus: string;
     zoo: string;
+    self: string;
+}
+
+export type IndividualHistoryInput = {
+    receiptDate: string;
+    individual: string;
+    individualStatus: string;
+    zoo: string;
+}
+
+export class IndividualHistoryRequest {
+    receiptDate: string;
+    individual: string;
+    individualStatus: string;
+    zoo: string;
+
+    constructor(receiptDate: string, individual: string, individualStatus: string, zoo: string) {
+        this.receiptDate = receiptDate;
+        this.individual = individual;
+        this.individualStatus = individualStatus;
+        this.zoo = zoo;
+    }
 }

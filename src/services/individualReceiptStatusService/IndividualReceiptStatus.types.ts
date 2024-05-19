@@ -17,4 +17,5 @@ export type IndividualReceiptStatusLinksDto = {
 
 export type IndividualReceiptStatus = {
     statusName: string;
+    self: string
 }

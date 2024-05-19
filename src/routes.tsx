@@ -21,6 +21,8 @@ import ProhibitedCreatePage from './pages/prohibited/ProhibitedCreatePage';
 import ProhibitedUpdatePage from './pages/prohibited/ProhibitedUpdatePage';
 import DiseaseHistoryCreatePage from './pages/diseaseHistory/DiseaseCreatePage';
 import DiseaseHistoryUpdatePage from './pages/diseaseHistory/DiseaseHistoryUpdatePage';
+import IndividualHistoryUpdatePage from './pages/individualHistory/IndividualHistoryUpdatePage';
+import IndividualHistoryCreatePage from './pages/individualHistory/IndividualHistoryCreatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -177,6 +179,22 @@ export function getRoutes(): RouteType[] {
             element: <DiseaseHistoryUpdatePage />,
             isProtected: false,
             path: '/disease-history/update',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <IndividualHistoryCreatePage />,
+            isProtected: false,
+            path: '/individual-history/create',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <IndividualHistoryUpdatePage />,
+            isProtected: false,
+            path: '/individual-history/update',
         },
 
         {

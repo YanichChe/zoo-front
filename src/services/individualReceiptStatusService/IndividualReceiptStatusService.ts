@@ -18,7 +18,8 @@ export class IndividualReceiptStatusService extends AbstractService {
     
         const individualReceiptStatusArray: IndividualReceiptStatus[] = individualReceiptStatusDtos.map((individualReceiptStatusDto: IndividualReceiptStatusDto) => {
             return {
-                statusName: individualReceiptStatusDto.statusName
+                statusName: individualReceiptStatusDto.statusName,
+                self: individualReceiptStatusDto._links.self.href,
             };
         });
     
