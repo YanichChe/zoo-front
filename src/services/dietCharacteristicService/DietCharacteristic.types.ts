@@ -32,4 +32,27 @@ export type DietCharacteristic = {
     physicalState: string;
     season: string;
     animal: string;
+    self: string;
 }
+
+export type DietCharacteristicInput = {
+    age: number;
+    physicalState: string;
+    season: string;
+    animal: string;
+}
+
+export class DietCharacteristicRequest {
+    age: number;
+    physicalState: string;
+    season: string;
+    animal: string;
+    
+    constructor(age: number, physicalState: string, season: string, animal: string) {
+        this.age = age;
+        this.physicalState = physicalState;
+        this.season = season;
+        this.animal = animal;
+    }
+}
+

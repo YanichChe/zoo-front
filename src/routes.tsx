@@ -31,6 +31,8 @@ import IndividualsVaccinationUpdatePage from './pages/individualVaccination/Indi
 import IndividualsVaccinationCreatePage from './pages/individualVaccination/IndividualVaccinationCreatePage';
 import FamilyRelationshipsCreatePage from './pages/familyRelationship/FamilyRelationshipsCreatePage';
 import FamilyRelationshipsUpdatePage from './pages/familyRelationship/FamilyRelationshipsUpdatePage';
+import DietCharacteristicCreatePage from './pages/dietCharacterictic/DietCharactericticCreatePage';
+import DietCharacteristicUpdatePage from './pages/dietCharacterictic/DietCharactericticUpdatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -271,6 +273,23 @@ export function getRoutes(): RouteType[] {
             element: <FamilyRelationshipsUpdatePage />,
             isProtected: false,
             path: '/family-relationship/update',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <DietCharacteristicCreatePage />,
+            isProtected: false,
+            path: '/diet-characteristic/create',
+        },
+
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <DietCharacteristicUpdatePage />,
+            isProtected: false,
+            path: '/diet-characteristic/update',
         },
 
         {

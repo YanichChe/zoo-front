@@ -17,6 +17,7 @@ export class SeasonService extends AbstractService {
         const seasonDtos: SeasonDto[] = _embedded['seasons'];
         return seasonDtos.map((seasonDto: SeasonDto) => ({
             season: seasonDto.season,
+            self: seasonDto._links.self.href
         }));
     }
 }
