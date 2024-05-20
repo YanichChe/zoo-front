@@ -1,31 +1,52 @@
-export type FamilyRelationshipDto = {
-    individual_id_1: {
-        href: string;
-    };
-    individual_id_2: {
-        href: string;
-    };
-    _links: FamilyRelationshipLinksDto;
+export type FamilyRelationshipsDto= {
+    _links: FamilyRelationshipsLinksDto;
 }
 
 export type EmbeddedDto = {
     _embedded: {
-        "family-relationships": FamilyRelationshipDto[];
+        "family-relationships": FamilyRelationshipsDto[];
     }
 }
 
-export type FamilyRelationshipLinksDto = {
+export type FamilyRelationshipsLinksDto = {
     self: {
         href: string;
     }
 
-    type_relationship: {
+    individualId1: {
+        href: string;
+    }
+
+    individualId2: {
+        href: string;
+    }
+
+    typeRelationship: {
         href: string;
     }
 }
 
-export type FamilyRelationship = {
-    individual1: string;
-    individual2: string;
+export type FamilyRelationships = {
+    individualId1: string
+    individualId2: string
     typeRelationship: string;
+    self: string;
+}
+
+export type FamilyRelationshipsInput = {
+    individualId1: string
+    individualId2: string
+    typeRelationship: string;
+}
+
+export class FamilyRelationshipsRequest {
+    individualId1: string
+    individualId2: string
+    typeRelationship: string;
+
+    constructor(individualId1: string, individualId2: string, typeRelationship: string) {
+        this.individualId1 = individualId1;
+        this.individualId2 = individualId2;
+        this.typeRelationship = typeRelationship;
+    }
 }

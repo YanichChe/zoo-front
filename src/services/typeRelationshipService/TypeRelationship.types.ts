@@ -1,5 +1,6 @@
 export type TypeRelationshipDto = {
     relationship: string;
+    _links: TypeRelationshipsLinksDto;
 }
 
 export type EmbeddedDto = {
@@ -10,4 +11,11 @@ export type EmbeddedDto = {
 
 export type TypeRelationship = {
     relationship: string;
+    self: string;
+}
+
+export type TypeRelationshipsLinksDto = {
+    self: {
+        href: string;
+    }
 }

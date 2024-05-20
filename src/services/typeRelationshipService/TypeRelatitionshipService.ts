@@ -17,6 +17,7 @@ export class TypeRelationshipService extends AbstractService {
         const typeRelationshipDtos: TypeRelationshipDto[] = _embedded['type-relationships'];
         return typeRelationshipDtos.map((typeRelationshipDto: TypeRelationshipDto) => ({
             relationship: typeRelationshipDto.relationship,
+            self: typeRelationshipDto._links.self.href,
         }));
     }
 }
