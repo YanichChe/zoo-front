@@ -17,6 +17,7 @@ export class VaccinationService extends AbstractService {
         const vaccinationDtos: VaccinationDto[] = _embedded['vaccinations'];
         return vaccinationDtos.map((vaccinationDto: VaccinationDto) => ({
             vaccinationName: vaccinationDto.vaccinationName,
+            self: vaccinationDto._links.self.href,
         }));
     }
 }

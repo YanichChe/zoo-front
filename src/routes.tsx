@@ -27,6 +27,8 @@ import ProviderHistoryUpdatePage from './pages/providerHistory/ProviderHistoryUp
 import ProviderHistoryCreatePage from './pages/providerHistory/ProviderHistoryCreatePage';
 import OffspringFactorsCreatePage from './pages/offspringFactors/OffspringFactorsCreatePage';
 import OffspringFactorsUpdatePage from './pages/offspringFactors/OffspringFactorsUpdatePage';
+import IndividualsVaccinationUpdatePage from './pages/individualVaccination/IndividualVaccinationUpdatePage';
+import IndividualsVaccinationCreatePage from './pages/individualVaccination/IndividualVaccinationCreatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -233,6 +235,23 @@ export function getRoutes(): RouteType[] {
             element: <OffspringFactorsUpdatePage />,
             isProtected: false,
             path: '/offspring-factor/update',
+        },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <IndividualsVaccinationCreatePage />,
+            isProtected: false,
+            path: '/inidividual-vaccination/create',
+        },
+
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <IndividualsVaccinationUpdatePage />,
+            isProtected: false,
+            path: '/inidividual-vaccination/update',
         },
 
         {
