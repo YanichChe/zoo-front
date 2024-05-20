@@ -31,4 +31,27 @@ export type OffspringFactor = {
     physicalState: string;
     ageStart: number;
     ageEnd: number;
+    self: string
+}
+
+export type OffspringFactorInput = {
+    animal: string;
+    physicalState: string;
+    ageStart: number;
+    ageEnd: number;
+
+}
+
+export class OffspringFactorRequest {
+    animal: string;
+    physicalState: string;
+    ageStart: number;
+    ageEnd: number;
+
+    constructor(animal: string, physicalState: string, ageStart: number, ageEnd: number) {
+        this.animal = animal;
+        this.physicalState = physicalState;
+        this.ageStart = ageStart;
+        this.ageEnd = ageEnd;
+    }
 }
