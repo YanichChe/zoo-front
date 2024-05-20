@@ -17,4 +17,5 @@ export type FoodProviderLinksDto = {
 
 export type FoodProvider = {
     provider: string;
+    self: string;
 }

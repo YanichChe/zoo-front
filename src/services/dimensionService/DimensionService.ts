@@ -18,7 +18,8 @@ export class DimensionService extends AbstractService {
     
         const dimensionArray: Dimension[] = dimensionDtos.map((dimensionDto: DimensionDto) => {
             return {
-                dimension: dimensionDto.dimension
+                dimension: dimensionDto.dimension,
+                self: dimensionDto._links.self.href,
             };
         });
     

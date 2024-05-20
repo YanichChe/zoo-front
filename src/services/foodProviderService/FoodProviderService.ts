@@ -17,6 +17,7 @@ export class FoodProviderService extends AbstractService {
         const foodProviderDtos: FoodProviderDto[] = _embedded['food-providers'];
         return foodProviderDtos.map((foodProviderDto: FoodProviderDto) => ({
             provider: foodProviderDto.provider,
+            self: foodProviderDto._links.self.href
         }));
     }
 }

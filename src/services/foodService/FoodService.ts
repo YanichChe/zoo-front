@@ -21,6 +21,7 @@ export class FoodService extends AbstractService {
             return {
                 foodName: foodDto.foodName,
                 feedType: feedType,
+                self: foodDto._links.self.href,
             };
         });
     

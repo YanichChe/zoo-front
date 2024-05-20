@@ -23,4 +23,5 @@ export type FoodLinksDto = {
 export type Food = {
     foodName: string;
     feedType: string;
+    self: string
 }

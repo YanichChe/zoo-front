@@ -17,4 +17,5 @@ export type DimensionLinksDto = {
 
 export type Dimension = {
     dimension: string;
+    self: string
 }

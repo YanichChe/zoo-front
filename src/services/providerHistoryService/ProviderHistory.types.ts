@@ -1,7 +1,7 @@
 export type ProviderHistoryDto = {
-    date: string; // Assuming date is in ISO format
-    number?: number; // Assuming number is optional
-    price: string; // Assuming price is represented as a string
+    date: string;
+    number: number; 
+    price: number;
     _links: ProviderHistoryLinksDto;
 }
 
@@ -31,9 +31,38 @@ export type ProviderHistoryLinksDto = {
 
 export type ProviderHistory = {
     date: string;
-    number?: number;
-    price: string;
+    number: number;
+    price: number;
     food: string;
     provider: string;
     dimension: string;
+    self: string
+}
+
+export type ProviderHistoryInput = {
+    date: string;
+    number: number;
+    price: number;
+    food: string;
+    provider: string;
+    dimension: string;
+    self: string
+}
+
+export class ProviderHistoryRequest {
+    date: string;
+    number: number;
+    price: number;
+    food: string;
+    provider: string;
+    dimension: string;
+
+    constructor(date: string, price: number, food: string, provider: string, dimension: string, number: number) {
+        this.date = date;
+        this.number = number;
+        this.price = price;
+        this.food = food;
+        this.provider = provider;
+        this.dimension = dimension;
+    }
 }
