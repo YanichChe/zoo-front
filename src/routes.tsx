@@ -33,6 +33,8 @@ import FamilyRelationshipsCreatePage from './pages/familyRelationship/FamilyRela
 import FamilyRelationshipsUpdatePage from './pages/familyRelationship/FamilyRelationshipsUpdatePage';
 import DietCharacteristicCreatePage from './pages/dietCharacterictic/DietCharactericticCreatePage';
 import DietCharacteristicUpdatePage from './pages/dietCharacterictic/DietCharactericticUpdatePage';
+import DietCreatePage from './pages/diet/DietCreatePage';
+import DietUpdatePage from './pages/diet/DietUpdatePage';
 
 export type RouteType = {
     accessRoles?: Role[]
@@ -291,6 +293,24 @@ export function getRoutes(): RouteType[] {
             isProtected: false,
             path: '/diet-characteristic/update',
         },
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <DietCreatePage />,
+            isProtected: false,
+            path: '/diet/create',
+        },
+
+
+        {
+            accessRoles: getAllRoles(),
+            children: [],
+            element: <DietUpdatePage />,
+            isProtected: false,
+            path: '/diet/update',
+        },
+
 
         {
             element: <Navigate to="/" />,

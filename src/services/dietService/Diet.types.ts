@@ -31,7 +31,32 @@ export type DietLinksDto = {
 export type Diet = {
     count: number;
     time: string;
-    dietCharacteristics: string;
+    dietCharacteristics: number;
     food: string;
     dimension: string;
+    self: string;
+}
+
+export type DietInput = {
+    count: number;
+    time: string;
+    dietCharacteristics: number;
+    food: string;
+    dimension: string;
+}
+
+export class DietRequest {
+    count: number;
+    time: string;
+    dietCharacteristics: number;
+    food: string;
+    dimension: string;
+    
+    constructor(count: number, time: string, dietCharacteristics: number, food: string, dimension: string) {
+        this.count = count;
+        this.time = time;
+        this.dietCharacteristics = dietCharacteristics;
+        this.food = food;
+        this.dimension = dimension;
+    }
 }

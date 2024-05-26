@@ -36,10 +36,21 @@ import ProviderHistoryTable from '../modules/TypedTables/ProviderHistoryTable';
 import ProhibitedCombinationsSettlementTable from '../modules/TypedTables/ProhibitedCombinationsSettlementTable';
 import ResponseAnimalTable from '../modules/TypedTables/ResponsibleAnimalTable';
 import AccessAnimalTable from '../modules/TypedTables/AccessAnimalTable';
-
-interface TableComponents {
-  [key: string]: React.ComponentType<any>;
-}
+import ActualStaffInfoTable from '../modules/TypedTables/ActualStaffInfoTable';
+import AnimalFoodTypeFoodTable from '../modules/TypedTables/AnimalTypeFoodTable';
+import CompatibleTypesTable from '../modules/TypedTables/CompatibleTypesTable';
+import DiseaseDataTable from '../modules/TypedTables/DiseaseDataTable';
+import FullDiseaseInfoTable from '../modules/TypedTables/FullDiseaseInfoTable';
+import FullVaccinationInfoTable from '../modules/TypedTables/FullVaccinationInfoTable';
+import IndividualHistoryInfoTable from '../modules/TypedTables/IndividualHistoryInfoTable';
+import NeedOverpowerTable from '../modules/TypedTables/ NeedOverpowerTable';
+import NeedWarmRoomTable from '../modules/TypedTables/NeedWarmRoomTable';
+import OffspringInfoTable from '../modules/TypedTables/OffspringInfoTable';
+import ResponsibleStaffTable from '../modules/TypedTables/ ResponsibleStaffTable';
+import StaffAccessTable from '../modules/TypedTables/StaffAccessTable';
+import VaccinationDataTable from '../modules/TypedTables/VaccinationDataTable';
+import ProviderHistoryZooTable from '../modules/TypedTables/ProviderHistoryZooTable';
+import AnimalsCellsInfoTable from '../modules/TypedTables/AnimalsCellsInfoTable';
 
 interface TableSection {
   sectionName: string;
@@ -107,6 +118,28 @@ const tableSections: TableSection[] = [
     tables: {
       'Доступ к животным': AccessAnimalTable,
       'Ответственные за животных': ResponseAnimalTable,
+    }
+  },
+
+  {
+    sectionName: 'Сложные запросы',
+    tables: {
+      'Информация о сотрудниках': ActualStaffInfoTable,
+      'Ответственные за животных': ResponsibleStaffTable,
+      'Доступ к животным': StaffAccessTable,
+      'Информация о клетах': AnimalsCellsInfoTable,
+      'Нуждается в теплом помещении': NeedWarmRoomTable,
+      'Данные о прививках': VaccinationDataTable,
+      'Данные о болезнях': DiseaseDataTable,
+      'Совместимые типы': CompatibleTypesTable,
+      'Нуждается в перемещении': NeedOverpowerTable,
+      'История поставок': ProviderHistoryTable,
+      'История поставок внутренняя': ProviderHistoryZooTable,
+      'Тип корма': AnimalFoodTypeFoodTable,
+      'Полная информаиция о вакцинации': FullVaccinationInfoTable,
+      'Полная информация болезнях': FullDiseaseInfoTable,
+      'Информация о размножении': OffspringInfoTable,
+      'Полная история особи': IndividualHistoryInfoTable,  
     }
   }
 ];
